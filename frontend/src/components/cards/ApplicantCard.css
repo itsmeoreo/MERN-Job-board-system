@@ -1,0 +1,57 @@
+.applicant-card{
+  display: flex;
+  background-color: white;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: .5rem;
+}
+
+.css-applicant-card-header{
+  flex-grow: 1;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.css-applicant-card-header img{
+  margin: 1rem 1rem 1rem 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+}
+
+.css-applicant-card-main-info h3{
+  margin: 0.5rem 0;
+  text-align: start;
+}
+
+.css-applicant-card-main-info p{
+  margin: 0;
+  padding: 0;
+  text-align: start;
+  display: flex;
+  flex-grow: 0;
+  text-decoration: none;
+  color: black;
+}
+
+.css-applicant-card-footer{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  justify-content: center;
+}
+
+.css-applicant-card-footer button{
+  border-radius: 1rem;
+  margin: .25rem;
+  text-decoration: none;
+  color: white;
+  background-color: darkcyan;
+  width: 8rem;
+}
+
+.css-applicant-card-footer button:hover{
+  background-color: rgb(0, 130, 130) !important;
+}

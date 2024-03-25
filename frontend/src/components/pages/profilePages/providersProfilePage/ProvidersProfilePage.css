@@ -1,0 +1,76 @@
+.providers-profile{
+  padding:  6rem 10rem 2rem 10rem;
+  background-color: rgb(213, 233, 233);
+  min-height: 83.5vh;
+}
+
+.css-providers-profile-page-full-container{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.css-providers-profile-page-jobs-container{
+  width: 63%;
+}
+
+.css-providers-profile-page-main-info-container{
+    position: sticky;
+    top: 6rem;
+    height: 20vh;
+    width: 35%;
+  }
+
+ .css-logout-button-container{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .profile-picture img{
+    opacity: 1;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+  }
+
+  .css-providers-profile-page-main-info-container .css-profile-name-username{
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .css-profile-name-username h1,.css-name-username .css-seeker-profile-page-name-update{
+    margin-top: 4rem;
+    text-align: end;
+  }
+
+  .css-profile-name-username p{
+    text-align: end;
+  }
+
+  .css-profile-name-username .css-name-username{
+    margin-right: 2rem;
+  }
+
+  .css-providers-profile-page-sub-info-container{
+    padding: 2rem 1rem;
+    text-align: left;
+    margin: 1rem 0rem;
+    background-color: white;
+    border-radius: 2rem;
+  }
+
+  .css-providers-profile-page-sub-info-container a{
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .css-providers-profile-page-sub-info-container a:hover{
+    color: darkcyan;
+  }
+
+  .css-providers-profile-page-sub-info-container p{
+    color: black;
+    margin-left: 0;
+    margin-right: 0;
+  }

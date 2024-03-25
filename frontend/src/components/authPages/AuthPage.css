@@ -1,0 +1,72 @@
+.css-loginpage-username .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-top-left-radius: 1.3rem !important;
+}
+.css-loginpage-password .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-bottom-left-radius: 1.3rem !important;
+}
+.css-loginpage-username .Mui-focused{
+  border-top-left-radius: 1.3rem !important;
+}
+.css-loginpage-password .Mui-focused{
+  border-bottom-left-radius: 1.3rem !important;
+}
+.css-loginpage-password label {
+  padding-left: 1% !important;
+}
+.css-registerpage-wholecontainer{
+  display: flex ;
+  margin: 4rem 5% 0 5%;
+}
+.css-registerpage-levels-maincontainer{
+  position: sticky;
+  top: 0;
+  /* background-color: rgba(255, 0, 0, 0.227); */
+  width: 30%;
+  height: fit-content;
+}
+.css-registerpage-contents{
+  width: 70%;
+  border-left: 1.5px solid lightgrey;
+}
+.css-registerpage-levels-subcontainer{
+  height: fit-content;
+  padding-top: 6rem;
+  margin-left: 4rem;
+  border-left: 3px solid darkcyan;
+}
+.css-registerpage .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-radius: 1.5rem !important;
+}
+.css-employer-register-page .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-radius: 1.5rem !important;
+}
+.css-u4tvz2-MuiFormLabel-root.Mui-focused{
+  color: darkcyan !important;
+}
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked{
+  color: darkcyan !important;
+}
+
+
+/* HIDE RADIO */
+
+
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  opacity: 25%;
+  cursor: pointer;
+}
+
+[type=radio] + img:hover{
+  opacity: 50%;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  opacity: 75%;
+}

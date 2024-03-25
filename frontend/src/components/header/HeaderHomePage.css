@@ -1,0 +1,15 @@
+.header-home-page{
+  border-radius: 2rem;
+  height: 40vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: absolute;
+  padding: 10% 0 2% 0;
+  margin-bottom: .5rem;
+}
+
+.header-home-page h1{
+  text-align: center;
+  color: darkcyan;
+  letter-spacing: 1.3rem;
+}

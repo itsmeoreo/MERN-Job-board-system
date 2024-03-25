@@ -1,0 +1,17 @@
+.css-jobtitle-autocomplete .css-1vc1jj6-MuiInputBase-root-MuiOutlinedInput-root{
+  border-top-left-radius: 1.3rem !important;
+  border-bottom-left-radius: 1.3rem !important;
+}
+/* Mui-focused{
+  border-color: ;
+} */
+.css-1jy569b-MuiFormLabel-root-MuiInputLabel-root{
+  padding-top: .4rem !important;
+  color: darkcyan !important;
+}
+.css-search-field-searchbtn{
+  transition: 200ms ease-in-out;
+}
+.css-search-field-searchbtn:hover{
+  background-color: rgb(0, 130, 130) !important;
+}

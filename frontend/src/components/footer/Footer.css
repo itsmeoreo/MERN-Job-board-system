@@ -1,0 +1,32 @@
+.css-Footer-part1{
+  border-top: solid black;
+  display: flex;
+  justify-content: center;
+}
+.css-Footer-part1 li,h4{
+  list-style: none;
+  text-align: left;
+  padding-right: 6rem;
+}
+.css-Footer-part1 li{
+  padding-bottom: 1.5rem;
+}
+.css-Footer-part1 a{
+  text-decoration: none;
+  color: black;
+}
+.css-Footer-part1 a:hover{
+  color: darkcyan;
+}
+.css-Footer-part2 a,p{
+  text-decoration: none;
+  color: grey;
+  padding: 0 .7rem;
+}
+.css-Footer-part2 a:hover{
+  color: darkcyan;
+}
+.css-Footer-part2{
+  border-top: solid grey;
+  justify-content: center;
+}

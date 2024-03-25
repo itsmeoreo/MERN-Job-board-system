@@ -1,0 +1,18 @@
+.email-us{
+  padding: 7rem 20rem;
+  max-height: 100vh;
+}
+
+.css-email-us-main-container{
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background-color: rgb(213, 233, 233);
+}
+
+.css-email-us-main-container .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border-radius: 1.5rem !important;
+}
+
+.css-email-us-main-container>button:hover{
+  background-color: rgb(0, 130, 130) !important;
+}

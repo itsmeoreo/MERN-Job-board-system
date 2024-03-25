@@ -1,0 +1,115 @@
+.seekers-profile{
+  padding:  6rem 10rem 2rem 10rem;
+  background-color: rgb(213, 233, 233);
+  min-height: 100vh;
+}
+
+.css-main-info-container{
+  display: flex;
+  margin: 1rem 3rem;
+}
+
+.css-main-info-container img{
+  opacity: 1;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+}
+
+.css-main-info-container div{
+  display: flex;
+  flex-direction: column;
+}
+
+.css-main-info-container h1{
+  margin: 4.5rem 0 0 0;
+}
+
+.css-seeker-profile-page-name-update{
+  margin-top: 3.4rem !important;
+}
+
+.css-main-info-container p{
+  padding: 0;
+  text-align: start;
+}
+
+.seekers-profile .actions{
+  float:right;
+  margin: 0rem 3rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.css-seekers-profile-page-main-container{
+  border-radius: 2rem;
+  padding: 1rem 3rem 5rem 3rem;
+  background-color: white;
+}
+
+.css-seekers-profile-page-main-container{
+  text-align: left;
+}
+
+.css-seekers-profile-page-main-container h2{
+  color: darkcyan;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.css-seekers-profile-page-main-container li{
+  margin: 1rem;
+  list-style: none;
+}
+
+.css-seekers-profile-page-main-container p{
+  color: black
+}
+
+.css-seekers-profile-page-skills{
+  display: flex;
+}
+
+.css-seekers-profile-page-skills .skills{
+  margin: 0 .5rem;
+  padding: .5rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  width: fit-content;
+  background-color: rgb(213, 233, 233);
+}
+
+.skills p{
+  padding: 0% .5rem;
+  margin: 0%;
+}
+
+.skills .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-top-left-radius: 1.3rem !important;
+}
+.skills .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-bottom-left-radius: 1.3rem !important;
+}
+.skills .Mui-focused{
+  border-top-left-radius: 1.3rem !important;
+}
+.skills .Mui-focused{
+  border-bottom-left-radius: 1.3rem !important;
+}
+
+.profile-page .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-radius: 1.3rem !important;
+}
+.profile-page .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-radius: 1.3rem !important;
+}
+.profile-page .Mui-focused{
+  border-radius: 1.3rem !important;
+}
+.profile-page .Mui-focused{
+  border-radius: 1.3rem !important;
+}
+
+.css-seeker-profile-page-name-update .css-94egb6-MuiInputBase-root-MuiOutlinedInput-root{
+  padding-left: 1rem;
+}

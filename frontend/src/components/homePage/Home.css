@@ -1,0 +1,40 @@
+.css-home-main-container{
+  background-color: rgb(213, 233, 233);
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.css-home-first-container{
+  height: fit-content;
+  margin-top: 5rem;
+  width: 60%;
+}
+.css-home-second-container{
+  position: sticky;
+  top: 5rem;
+  height: fit-content;
+  width: 20%;
+}
+.css-home-messagebox{
+  height: 20rem;
+  width: 2rem;
+  background-color: black;
+  position: fixed;
+  bottom: 3px;
+  right: 3px;
+}
+.css-homepage-footer a{
+  margin: 7px;
+  font-size: small;
+  text-decoration: none;
+  color: grey;
+}
+.css-homepage-footer a:hover{
+  color: darkcyan;
+}
+.css-home .css-appbar{
+  position: fixed !important;
+  top: 0;
+}

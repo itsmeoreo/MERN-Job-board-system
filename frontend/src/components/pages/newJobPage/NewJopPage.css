@@ -1,0 +1,55 @@
+.css-new-job-page{
+  padding: 4rem 10rem;
+  min-height: 95vh;
+  background-color: rgb(213, 233, 233);
+}
+
+.css-new-job-page h4{
+  text-decoration: underline;
+  margin-top: 2rem;
+}
+
+.css-new-job-page-main-container{
+  padding: 2rem 5rem 5rem 5rem;
+  background-color: white;
+  min-height: 70vh;
+  border-radius: 2rem;
+}
+
+.css-new-job-page-main-container p{
+  color: black;
+  text-align: start;
+}
+
+.css-new-job-page-skills-required{
+  display: flex;
+}
+
+.css-new-job-page-custom-date-picker-container{
+  display: flex;
+  margin: 2rem 0rem;
+}
+
+.css-new-job-page-custom-date-picker{
+  /* text-align: start;
+  margin: 2rem; */
+  color: black;
+  border: none;
+  background-color: rgb(213, 233, 233);
+  width: 9rem;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+}
+
+.css-new-job-page-main-container  .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-radius: 1.3rem !important;
+}
+.css-new-job-page-main-container  .css-1d3z3hw-MuiOutlinedInput-notchedOutline{
+  border-radius: 1.3rem !important;
+}
+.css-new-job-page-main-container  .Mui-focused{
+  border-radius: 1.3rem !important;
+}
+.css-new-job-page-main-container  .Mui-focused{
+  border-radius: 1.3rem !important;
+}
