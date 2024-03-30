@@ -65,9 +65,14 @@ const login = async (req, res) => {
 
 const allVerifyRequests = async (req, res) => {
   const companies = await Company.find({ password: undefined });
-  if (companies.length === 0)
+  if (companies.length === 0){
+    console.log("no");
     return res.status(200).json({ Empty: "No pending requests" });
-  res.send(companies);
+  }
+  else{
+    console.log("yes");
+    res.status(200).send(companies);
+  }
 };
 
 const verifyCompany = async (req, res) => {
@@ -140,4 +145,33 @@ const block = async (req, res) => {
   }
 };
 
-export default { register, login, allVerifyRequests, verifyCompany, verifyFailedCompany, block };
+const getSingleUser= async ( req, res)=> {
+  try {
+    const user= await Seeker.findOne({email: req.params.email}) || await Provider.findOne({email: req.params.email}) || await Company.findOne({recruiter_email: req.params.email})
+    res.status(200).send(user)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+const changePassword= async ( req, res )=> {
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  try{
+    const user= await Seeker.findOneAndUpdate(
+      {email: req.body.email},
+      {password: hashedPassword}) 
+    || await Provider.findOneAndUpdate(
+      {email: req.body.email},
+      {password: hashedPassword}) 
+    || await Company.findOneAndUpdate(
+      {recruiter_email: req.body.email},
+      {password: hashedPassword})
+    res.status(200).json({success: "pasword reset success"})
+    } catch (error) {
+      res.status(400).json({error: error.message})
+    }
+}
+
+export default { register, login, allVerifyRequests, verifyCompany, verifyFailedCompany, block, getSingleUser, changePassword };

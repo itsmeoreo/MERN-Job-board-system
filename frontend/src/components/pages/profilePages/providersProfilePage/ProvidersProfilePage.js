@@ -91,7 +91,10 @@ function ProvidersProfilePage() {
 
 
   function HandleLogout() {
-    Cookies.remove("token");
+    const cookieNames = Object.keys(Cookies.get());
+    cookieNames.forEach(cookieName => {
+      Cookies.remove(cookieName);
+    })
     navigate("/");
   }
 

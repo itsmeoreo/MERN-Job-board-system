@@ -22,12 +22,35 @@ const getAllJobsByOne= async ( req, res )=> {
   jobs!==null&&jobs!==undefined ? res.status(200).send(jobs) : res.status(200).json({Empty: `no jobs poster by ${req.params.username}`})
 }
 const getAllJobs= async ( req, res )=> {
-
   const offset = parseInt(req.query.offset) || 0; 
   const limit = parseInt(req.query.limit) || 10;
 
   const jobs= await Job.find().skip(offset).limit(limit)
   res.status(200).json(jobs)
+}
+
+const searchJobs= async ( req, res)=> {
+  const { position, location, limit } = req.query;
+  const query = {};
+  console.log(query);
+
+  if (position !== 'null') {
+    query.position = position;
+  }
+  if (location !== 'null') {
+    query.location = location;
+  }
+  console.log(query);
+  if(limit){
+    const jobs= await Job.find(query).limit(limit)
+    console.log(jobs);
+    res.status(200).send(jobs)
+  }
+  else{
+    const jobs= await Job.find(query)
+    console.log(jobs);
+    res.status(200).send(jobs)
+  }
 }
 
 const getSingleApplication= async ( req, res )=> {
@@ -42,14 +65,19 @@ const getSingleApplication= async ( req, res )=> {
 }
 
 const getApplications= async ( req, res )=> {
-  const job= await Job.findById(req.params.job_id)
-  const user= await Company.findById(job.company_or_provider) || await Provider.findById(job.company_or_provider)
-  if(user.company_name === req.user.company_name || user.username === req.params.username ){
-    const applications= await Application.find({job: req.params.job_id})
-    applications? res.status(200).send(applications) : res.status(200).json({Empty: "No applications for this job"})
+  try{
+    const job= await Job.findById(req.params.job_id)
+    const user= await Company.findById(job.company_or_provider) || await Provider.findById(job.company_or_provider)
+    if(user.company_name === req.user.company_name || user.username === req.params.username ){
+      const applications= await Application.find({job: req.params.job_id})
+      applications? res.status(200).send(applications) : res.status(200).json({Empty: "No applications for this job"})
+    }
+    else{
+      res.status(400).json({declined: "You are not authorised to view these details"})
+    }
   }
-  else{
-    res.status(400).json({declined: "You are not authorised to view these details"})
+  catch(error){
+    res.status(400).json({error: error.message})
   }
 }
 
@@ -82,4 +110,4 @@ const closeJob= async ( req, res )=> {
   }
 }
 
-export default { getSingleJob, getAllJobsByOne, getAllJobs, getSingleApplication, getApplications, result, closeJob }
+export default { getSingleJob, getAllJobsByOne, getAllJobs, searchJobs, getSingleApplication, getApplications, result, closeJob }

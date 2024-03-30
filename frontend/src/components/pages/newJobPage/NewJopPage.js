@@ -125,9 +125,8 @@ function NewJopPage() {
   };
 
   useEffect(() => {
-    setLoading(false)
     if(jobDetails){
-      postJob()
+      setLoading(false)
     }
   }, [jobDetails]);
 
@@ -135,39 +134,66 @@ function NewJopPage() {
     event.preventDefault();
     setLoading(true);
     try {
-      setJobDetails({
-        position,
-        location,
-        experience,
-        skills_required,
-      });
+      const updatedJobDetails= {
+        position: position,
+        location: location,
+        experience: experience,
+        skills_required: skills_required,
+      };
+      // console.log(...jobDetails);
       if (job_description[0] !== "") {
-        setJobDetails({ ...jobDetails, job_description });
+        updatedJobDetails.job_description= job_description;
       }
       if (job_responsibilities[0] !== "") {
-        setJobDetails({ ...jobDetails, job_responsibilities });
+        updatedJobDetails.job_responsibilities= job_responsibilities;
       }
       if (end_date !== null) {
-        setJobDetails({ ...jobDetails, end_date });
+        updatedJobDetails.end_date= end_date;
       }
+      setJobDetails(updatedJobDetails)
+      console.log(updatedJobDetails);
+      // setTimeout(() => {
+        console.log(jobDetails);
+      // }, 2000);
+      // console.log(jobDetails);
+      // console.log(skills_required);
+      // postJob()
     } catch (error) {
       console.log(error);
     }
   }
 
+  useEffect(() => {
+    console.log(jobDetails);
+    if(jobDetails!==null) postJob();
+  }, [jobDetails]);
+
   async function postJob(){
-    if(company){
-      await axios
-        .post("http://localhost:3333/company/new_job", jobDetails, {withCredentials: true} )
-        .then(response=>alert("job post success"))
-        .catch(error=>console.log(error))
+    console.log(jobDetails);
+    if(jobDetails){
+      if(company){
+        await axios
+          .post("http://localhost:3333/company/new_job", jobDetails, {withCredentials: true} )
+          .then(response=>alert("job post success"))
+          .catch(error=>console.log(error))
+      }
+      else{
+        await axios
+          .post("http://localhost:3333/providers/new_job", jobDetails, {withCredentials: true} )
+          .then(response=>{alert("job post success")})
+          .catch(error=>console.log(error))
+      }
+      setJobDetails(null)
+      setPosition('')
+      setState('')
+      setCity('')
+      setExperience('')
+      setJob_description([''])
+      setJob_responsibilities([''])
+      setSkills([''])
+      setEnd_date('')
     }
-    else{
-      await axios
-        .post("http://localhost:3333/providers/new_job", jobDetails, {withCredentials: true} )
-        .then(response=>alert("job post success"))
-        .catch(error=>console.log(error))
-    }
+    else console.log("no data");
   }
 
   const experienceMenu = [
@@ -281,6 +307,7 @@ function NewJopPage() {
                         size="small"
                         type="text"
                         value={input}
+                        required
                         fullWidth
                         multiline
                         onChange={(e) =>

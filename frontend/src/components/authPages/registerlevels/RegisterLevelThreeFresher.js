@@ -43,6 +43,7 @@ function RegisterLevelThreeFresher(props) {
           <div  style={{ margin: "1.5rem auto", width: "90%", padding: "1rem 0"}}>
           <TextField
               id="outlined-select-currency"
+              fullWidth
               select
               label="Heighest Qualification"
               onChange={(event)=>props.SetHeighest_qualification(event.target.value)}
@@ -57,6 +58,7 @@ function RegisterLevelThreeFresher(props) {
             <TextField
               id="outlined-select-currency"
               label="Specialisation / major"
+              fullWidth
               onChange={(event)=>props.SetMajor(event.target.value)}
               style={{textAlign: "start", marginTop: "1.5rem"}}
             >
@@ -71,6 +73,7 @@ function RegisterLevelThreeFresher(props) {
             />
             <TextField
               id="outlined-select-currency"
+              fullWidth
               select
               label="Year of Graduation"
               style={{textAlign: "start", marginTop: "1.5rem"}}

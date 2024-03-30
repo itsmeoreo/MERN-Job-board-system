@@ -1,15 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, createTheme, TextField, ThemeProvider } from '@mui/material';
 import Cookies from 'js-cookie'
-import React from 'react'
+import React, { useState } from 'react'
 import Appbar from '../../navbar/Appbar';
 import SendIcon from '@mui/icons-material/Send';
 import LandingPageAppBar from '../../navbar/Navbar';
 import {faFaceSmile} from '@fortawesome/free-solid-svg-icons'
 import emailjs from '@emailjs/browser'
 import './EmailUs.css'
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function EmailUs() {
+
+  const navigate= useNavigate()
 
   const theme = createTheme({
     components: {
@@ -32,6 +35,7 @@ function EmailUs() {
     event.preventDefault()
     emailjs.sendForm("service_w6d1l1m", "template_3meir7a", event.target, "UxilKB-ZRu5wdpmqh")
     alert("email sent")
+    navigate('/')
   }
 
   const loggedin= Cookies.get('token') ? true : false;

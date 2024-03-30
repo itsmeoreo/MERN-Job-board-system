@@ -78,13 +78,13 @@ const Login = async (req, res) => {
         res.cookie("token", token, { maxAge: 900000 });
         res.status(200).json({ success: "Login successful", token });
       } else {
-        res.status(400).json({ invalid_credentials: "Invalid password !" });
+        res.status(400).json({invalid_credentials: "Invalid password !" });
       }
     } else {
-      res.status(400).json({ invalid_credentials: "Invalid username !" });
+      res.status(400).json({invalid_credentials: "Invalid username !" });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({invalid_credentials: error.message });
   }
 };
 
@@ -149,6 +149,16 @@ const getUser = async (req, res)=> {
   }
 }
 
+const getApplicant = async (req, res)=> {
+  try{
+    const applicant= await Seeker.findById(req.params.id)
+    res.status(200).json(applicant)
+  }
+  catch(error){
+    res.status(400).json({error: error.message})
+  }
+}
+
 const createApplication= async ( req, res )=> {
   const user= await Seeker.findOne({username: req.user.username})
   const applied= await Application.findOne({job: req.params.job_id, applicant: user._id})
@@ -164,4 +174,4 @@ const createApplication= async ( req, res )=> {
   }
 }
 
-export default { register, Login , logout, updateUser, createApplication, getUser };
+export default { register, Login , logout, updateUser, createApplication, getUser, getApplicant };

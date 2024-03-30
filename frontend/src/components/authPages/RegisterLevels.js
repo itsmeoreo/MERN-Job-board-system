@@ -115,8 +115,9 @@ function RegisterLevels(props) {
           }
         })
         .then(response=> {
-          navigate('/home');
           Cookies.set("token",response.data.token)
+          Cookies.set('user',"seeker")
+          navigate('/home');
         })
         .catch((error)=>console.error(error))
       

@@ -18,6 +18,7 @@ import axios from "axios";
 import Loading from "../pages/loading/Loading";
 import home_page_header from '../../services/images/home_page_header.jpg'
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 function Home() {
   const theme = createTheme({
@@ -38,7 +39,10 @@ function Home() {
   });
 
   const usertype= Cookies.get('user')
+  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null)
   const [jobs,setJobs] = useState([]);
+  const [jobsByUser, setJobsByUser] = useState(null)
   const [hasMore, setHasMore] = useState(true);
   const [index, setIndex] = useState(2);
 
@@ -51,6 +55,32 @@ function Home() {
     }
     getJobs()
   }, []);
+
+  useEffect(() => {
+    async function getUser(){
+      if(usertype=== 'free-lancer'){
+        await axios
+          .get("http://localhost:3333/providers/user", {withCredentials: true})
+          .then(response=>setUser(response.data))
+          .catch(error=>console.log(error))
+      }
+      else if(usertype === 'company'){
+        await axios
+          .get("http://localhost:3333/company/user", {withCredentials: true})
+          .then(response=>setUser(response.data))
+          .catch(error=>console.log(error))
+      }
+    }
+    async function getJobsByUser(){
+      await axios
+          .get(`http://localhost:3333/job/${user.username}/all_jobs`, {withCredentials: true})
+          .then(response=>setJobsByUser(response.data))
+          .catch(error=>console.log(error))
+    }
+    if(!user) getUser()
+    if(user && !jobsByUser) getJobsByUser()
+    if(user && jobsByUser) setLoading(false)
+  }, [user, jobsByUser]);
 
   const fetchMoreJobs=async ()=> {
     await axios
@@ -142,7 +172,12 @@ function Home() {
                 {jobs && jobs.map((job)=> <JobCard key={job.id} job={job} />)}
               </InfiniteScroll>
             :
-              <ApplicantCard />
+              loading?
+                <Loading style={{margin: "0 45%"}} />
+              :
+                jobsByUser && jobsByUser.map((job)=>
+                  <JobCard key={job._id} job={job}/>
+                ) || <h4>No jobs posted try posting a new job</h4>
             }
           </div>
           <div
@@ -164,9 +199,10 @@ function Home() {
               <br />
               <a href="">Privacy policy</a>
               <a href="">Rules to post jobs</a>
+              <Link to='/contact_us' >Email us</Link>
             </div>
           </div>
-          <div className="css-home-messagebox"></div>
+          {/* <div className="css-home-messagebox"></div> */}
         </div>
       </div>
     </ThemeProvider>

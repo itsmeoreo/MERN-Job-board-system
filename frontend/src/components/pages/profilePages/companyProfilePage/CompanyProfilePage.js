@@ -38,7 +38,6 @@ function CompanyProfilePage() {
 
   useEffect(() => {
     async function getUser(){
-      console.log();
       await axios
         .get("http://localhost:3333/company/user", {withCredentials: true})
         .then(response=>setUser(response.data))
@@ -70,7 +69,10 @@ function CompanyProfilePage() {
 
 
   function HandleLogout() {
-    Cookies.remove("token");
+    const cookieNames = Object.keys(Cookies.get());
+    cookieNames.forEach(cookieName => {
+      Cookies.remove(cookieName);
+    })
     navigate("/");
   }
 

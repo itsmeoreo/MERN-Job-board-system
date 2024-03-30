@@ -6,7 +6,7 @@ import {
   faClockRotateLeft
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./JobCard.css";
 import { Button, createTheme, ThemeProvider } from "@mui/material";
 import Cookies from "js-cookie";
@@ -14,6 +14,8 @@ import axios from "axios";
 import Loading from "../pages/loading/Loading";
 
 function JobCard({job}) {
+
+  const navigate= useNavigate();
 
   const userType= Cookies.get('user')
 
@@ -63,8 +65,8 @@ function JobCard({job}) {
     }
     await axios
       .post(`http://localhost:3333/seekers/apply/${job._id}`, "application", {withCredentials: true})
-      .then(response=>{alert("application successful");setLoading(false);pushNotification()})
-      .catch(error=>{console.log(error);alert("something went wrong");setLoading(false)})
+      .then(response=>{setApplied(true);alert("application successful");pushNotification();setLoading(false);})
+      .catch(error=>{console.log(error);alert("something went wrong, please reload the age");setLoading(false)})
   }
 
   return (
@@ -114,14 +116,22 @@ function JobCard({job}) {
           <div className="css-job-card-footer">
             <p style={{flexGrow: "1", textAlign: "start"}}><b style={{marginRight: ".5rem"}}><FontAwesomeIcon icon={faClockRotateLeft} /></b>{existance} days ago</p>
             <div className="css-job-card-buttons">
-              <Link onClick={()=>Cookies.set('job',job._id)} to={`/job/${job._id}`}><Button>view job</Button></Link>
-              {userType==='seeker' ?
-                applied ?
-                  <Button>applied</Button>
-                :
-                  <Button onClick={HandleApply}>apply</Button>
+              {userType?
+                <React.Fragment>
+                  <Link onClick={()=>Cookies.set('job',job._id)} to={`/job/${job._id}`}><Button>view job</Button></Link>
+                  {userType==='seeker' ?
+                    applied ?
+                      <Button>applied</Button>
+                    :
+                      <Button onClick={HandleApply}>apply</Button>
+                  :
+                    <Button
+                      onClick={()=>{Cookies.set('job',job._id);navigate(`/${job._id}/applications`)}}
+                    >view applications</Button>
+                  }
+                </React.Fragment>
               :
-                <Button>view applications</Button>
+                <Link to='/register'><Button>Create account to interact</Button></Link>
               }
             </div>
           </div>

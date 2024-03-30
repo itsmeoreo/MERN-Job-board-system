@@ -108,7 +108,7 @@ function RegisterPageEmployer() {
   }
   async function HandleSubmit(event) {
     event.preventDefault();
-    if (employer === "organisation") {
+    if (employer === "company") {
       const companies = {
         company_name: company_name,
         recruiter_name: recruiter_name,
@@ -119,7 +119,7 @@ function RegisterPageEmployer() {
 
       await axios
         .post("http://localhost:3333/company/register", companies)
-        .then((response) => navigate("/"))
+        .then((response) => {alert("Your request is sent successfully, please try loggin in with your company name as username and employee id followed by your company name as the password after 24 hours");navigate("/")})
         .catch((error) => console.error(error));
     } else {
       const provider = {
@@ -136,8 +136,9 @@ function RegisterPageEmployer() {
       await axios
         .post("http://localhost:3333/providers/register", provider)
         .then((response) => {
-          navigate("/home");
           Cookies.set("token", response.data.token);
+          Cookies.set("user", employer);
+          navigate("/home");
         })
         .catch((error) => console.error(error));
     }
@@ -207,7 +208,7 @@ function RegisterPageEmployer() {
                 onClick={HandleEmployerSelect}
                 type="radio"
                 name="employer-detail"
-                value="organisation"
+                value="company"
                 required
               />
               <img
@@ -222,7 +223,7 @@ function RegisterPageEmployer() {
               />
             </label>
           </div>
-          {employer === "organisation" ? (
+          {employer === "company" ? (
             <div>
               <Autocomplete
                 style={{

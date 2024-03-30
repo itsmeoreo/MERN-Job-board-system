@@ -53,3 +53,7 @@
 .css-new-job-page-main-container  .Mui-focused{
   border-radius: 1.3rem !important;
 }
+
+.css-new-job-page .bookmark-icon{
+  color: darkcyan !important;
+}

@@ -15,6 +15,8 @@ seeker_route.put('/update', authMiddleware, uploadFile.single("resume"), seekerC
 
 seeker_route.get('/user', authMiddleware , seekerController.getUser)
 
+seeker_route.get('/applicant/:id', authMiddleware, seekerController.getApplicant)
+
 seeker_route.post('/apply/:job_id', authMiddleware, seekerController.createApplication)
 
 export default seeker_route;

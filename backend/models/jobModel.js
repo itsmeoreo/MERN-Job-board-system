@@ -26,9 +26,9 @@ const job= new mongoose.Schema({
   },
   start_date: Date,
   end_date: Date,
-  job_description: String,
+  job_description: [String],
   skills_required: [String],
-  job_responsibilities: String,
+  job_responsibilities: [String],
   closed: Boolean
 })
 

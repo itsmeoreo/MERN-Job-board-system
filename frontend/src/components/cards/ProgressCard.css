@@ -1,0 +1,11 @@
+.progress-card{
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1.3rem;
+  width: fit-content;
+}
+
+.circular-progress-bar{
+  height: 7rem;
+  width: 7rem;
+}

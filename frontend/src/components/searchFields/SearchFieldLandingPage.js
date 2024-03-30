@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import "./SearchFieldLandingPage.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function SearchFieldLandingPage() {
+function SearchFieldLandingPage(props) {
   const theme = createTheme({
     components: {
       MuiOutlinedInput: {
@@ -23,6 +23,27 @@ function SearchFieldLandingPage() {
     },
   });
 
+    const [selectedPosition, setSelectedPosition] = React.useState(null);
+    const [selectedLocation, setSelectedLocation] = React.useState(null);
+  
+    const handlePositionChange = (event, newValue) => {
+      setSelectedPosition(newValue);
+      console.log(newValue);
+      if(newValue !== null)
+        props.SetPosition(newValue.label)
+      else
+        props.SetLocation(null)
+    }
+    
+      const handleLocationChange = (event, newValue) => {
+        setSelectedLocation(newValue);
+        if(newValue !== null)
+          props.SetLocation(newValue.label)
+        else
+          props.SetLocation(null)
+      }
+  
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -36,8 +57,9 @@ function SearchFieldLandingPage() {
         <Autocomplete
           className="css-jobtitle-autocomplete"
           disablePortal
+          onChange={handlePositionChange}
           id="combo-box-demo"
-          options={top100Films}
+          options={jobPositions}
           style={{
             borderTopLeftRadius: "1.5rem",
             borderBottomLeftRadius: "1.5rem",
@@ -57,8 +79,9 @@ function SearchFieldLandingPage() {
         />
         <Autocomplete
           disablePortal
+          onChange={handleLocationChange}
           id="combo-box-demo"
-          options={top100Films}
+          options={locations}
           sx={{ width: 300 }}
           renderInput={(params) => (
             <TextField
@@ -71,6 +94,7 @@ function SearchFieldLandingPage() {
         <Button
           className="css-search-field-searchbtn"
           sx={{ width: 150 }}
+          onClick={props.HandleSearch || null}
           style={{
             borderTopRightRadius: "1.3rem",
             borderBottomRightRadius: "1.3rem",
@@ -85,10 +109,17 @@ function SearchFieldLandingPage() {
   );
 }
 
-const top100Films = [
-  { label: "The Shawshank Redemption", year: 1994 },
-  { label: "The Godfather", year: 1972 },
-  { label: "The Godfather: Part II", year: 1974 },
+const jobPositions = [
+  { label: "Developer"},
+  // { label: "front-end developer"},
+  { label: "example"},
+  {label: "Data Administrator"}
 ];
+
+const locations = [
+  { label: "chennai"},
+  { label: "Coimbatore"},
+  { label: "Udaipur"},
+]
 
 export default SearchFieldLandingPage;

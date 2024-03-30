@@ -12,6 +12,10 @@ import ErrorPage from './components/pages/errorPage/ErrorPage';
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import EmailUs from './components/pages/emailUs/EmailUs';
+import ForgotPassword from './components/authPages/forgot password/ForgotPassword';
+import AdminPage from './components/pages/adminPage/AdminPage';
+import AdminLogin from './components/authPages/AdminLogin';
+import ApplicationPage from '../src/components/pages/applicationPage/ApplicationPage'
 
 function App() {
   const [token, setToken] = useState('');
@@ -26,21 +30,25 @@ function App() {
         <Route path='/email_us' element={<EmailUs />} />
         <Route path='/' element={<LandingPage />}/>
         <Route path='/login' element={<LoginPage />}/>
+        <Route path='/admin_login' element={<AdminLogin />}/>
         <Route path='/register' element={<RegisterPage />}/>
+        <Route path='/contact_us' element={<EmailUs />}/>
         <Route path='/employer_register' element={<RegisterPageEmployer />}/>
+        <Route path='/reset_password' element={<ForgotPassword />} />
         {token ?
           <React.Fragment>
             <Route path='/home' element={<Home />} />
             <Route path='/user' element={<ProfilePage/>} />
+            <Route path='/admin_page' element={<AdminPage />} />
             <Route path='/job/:job_id' element={<JobPage/>} />
             <Route path='/new_job' element={<NewJopPage />} />
-            {/* <Route path='/home/job' element={<JobPage/>} />*/}
+            <Route path='/:job/applications' element={<ApplicationPage />}/>
           </React.Fragment>
         :
           ""
         }
         <Route path='/*' element={<ErrorPage />} />       
-      </Routes> 
+      </Routes>  
     </div>
   );
 }

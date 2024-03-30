@@ -12,6 +12,8 @@ job_router.get('/:username/all_jobs', jobController.getAllJobsByOne)
 
 job_router.get('/:job_id/applications', authMiddleware, jobController.getApplications)
 
+job_router.get('/search', jobController.searchJobs)
+
 job_router.get('/:job_id/single_application', authMiddleware, jobController.getSingleApplication)
 
 job_router.put('/:job_id/:application_id/:result', authMiddleware,jobController.result )

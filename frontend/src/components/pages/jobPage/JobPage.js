@@ -9,12 +9,19 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Appbar from "../../navbar/Appbar";
 import LandingPageAppBar from "../../navbar/Navbar";
 import Loading from "../loading/Loading";
 import "./JobPage.css";
 
 function JobPage() {
+
+  const navigate= useNavigate()
+
+  const userType= Cookies.get('user')
+
+  const [applied, setApplied] = useState(null)
   const [loading, setLoading] = useState(true);
   const [job, setJob] = useState(null);
   const [provider, setProvider] = useState(null);
@@ -69,6 +76,18 @@ function JobPage() {
     if (provider) {
       setLoading(false);
     }
+  }, [provider]);
+
+  useEffect(() => {
+    async function getapplication(){
+      if(userType==="seeker" && job)
+        await axios
+          .get(`http://localhost:3333/job/${job._id}/single_application`, {withCredentials: true})
+          .then(response=>setApplied(response.data))
+          .catch(error=>console.log(error))
+    }
+    getapplication();
+    if(job && provider && (applied!==null || userType!=='seeker')) setLoading(false)
   }, [provider]);
 
   return (
@@ -128,43 +147,58 @@ function JobPage() {
               </div>
               <h2>Job Description</h2>
               <ul>
-                <li>point 1</li>
-                <li>point 2</li>
-                <li>has to map n points here</li>
+                {job.job_description.map((option,index)=> (
+                  <li key={index}>{option}</li>
+                ))}
               </ul>
-              <h2>Job Responsibilities</h2>
-              <ul>
-                <li>point 1</li>
-                <li>point 2</li>
-                <li>has to map n points here</li>
-              </ul>
+              {job.job_responsibilities ?
+                <React.Fragment>
+                  <h2>Job Responsibilities</h2>
+                  <ul>
+                    {job.job_responsibilities.map((option,index)=>(
+                      <li key={index}>{option}</li>
+                    ))}
+                  </ul>
+                </React.Fragment>
+              :
+                ""
+              }
               <h2>Required skills</h2>
               <div className="css-job-page-skills">
-                <div className="skills">
-                  <p>java</p>
-                </div>
-                <div className="skills">
-                  <p>java script</p>
-                </div>
-                <div className="skills">
-                  <p>DBMS</p>
-                </div>
+                {job.skills_required.map((skill)=>(
+                  <div className="skills">
+                    <p>{skill}</p>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="css-job-page-footer">
               {seeker ? (
-                <Button
-                  style={{
-                    backgroundColor: "darkcyan",
-                    color: "white",
-                    borderRadius: "1.5rem",
-                  }}
-                  onClick={HandleApply}
-                >
-                  Apply
-                </Button>
+                applied ?
+                  <Button
+                    style={{
+                      backgroundColor: "darkcyan",
+                      color: "white",
+                      borderRadius: "1.5rem",
+                    }}
+                    // onClick={HandleApply}
+                  >
+                    applied
+                  </Button>
+                :
+                  <Button
+                    style={{
+                      backgroundColor: "darkcyan",
+                      color: "white",
+                      borderRadius: "1.5rem",
+                    }}
+                    onClick={HandleApply}
+                  >
+                    Apply
+                  </Button>
               ) : (
                 <Button
+                  onClick={()=>{Cookies.set('job',job._id);navigate(`/${job._id}/applications`)}}
                   style={{
                     backgroundColor: "darkcyan",
                     color: "white",

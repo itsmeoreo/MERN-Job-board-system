@@ -150,8 +150,11 @@ function SeekersProfilePage() {
   }, [seeker]);
 
   function HandleLogout(){
-    Cookies.remove('token')
-    navigate('/')
+    const cookieNames = Object.keys(Cookies.get());
+    cookieNames.forEach(cookieName => {
+      Cookies.remove(cookieName);
+    })
+    navigate("/");
   }
 
   const VisuallyHiddenInput = styled("input")({

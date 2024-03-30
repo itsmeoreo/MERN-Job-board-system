@@ -2,6 +2,7 @@ import React from "react";
 import "./Footer.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faInstagram, faFacebookF, faLinkedinIn} from '@fortawesome/free-brands-svg-icons'
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -47,8 +48,7 @@ function Footer() {
           <ul>
             <h4>Contact us</h4>
             <li>
-              <a href="https://mail.google.com/mail/u/0/#inbox?compose=memurli2322@gmail.com
-              " target='_blank'>Email us</a>
+              <Link to='/contact_us' >Email us</Link>
             </li>
             <li>
               <a href="">Call +91 9150144706</a>

@@ -43,6 +43,8 @@ function ProfileCard() {
     if(user) setLoading(false)
   }, [user]);
 
+  console.log(user);
+
   return (
     <React.Fragment>
       {loading ? 
@@ -67,10 +69,16 @@ function ProfileCard() {
                 {user.professional_detail==='experienced' ?
                   <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faBriefcase}/>{user.current_designation}</p>
                 :
-                  userType === 'fresher' ?
-                    <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faGraduationCap}/>{user.heighest_qualification}</p>
+                  user.professional_detail === 'fresher' ?
+                    <React.Fragment>
+                      <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faGraduationCap}/>{user.heighest_qualification}</p>
+                      <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faBuilding}/>{user.university}</p>
+                    </React.Fragment>
                   :
-                    <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faBook}/>{user.heighest_qualification}</p>
+                    <React.Fragment>
+                      <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faBook}/>{user.heighest_qualification}</p>
+                      <p style={{textAlign: "start", color: "black"}}><FontAwesomeIcon style={{marginRight: ".5rem"}} icon={faBuilding}/>{user.university}</p>
+                    </React.Fragment>
                 }
                 </React.Fragment>
               :

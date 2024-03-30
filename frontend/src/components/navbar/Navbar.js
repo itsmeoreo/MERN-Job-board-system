@@ -78,19 +78,34 @@ function LandingPageAppBar(props) {
             </div>
           :
             props.inLogin ?
-              <NavLink to='/register' style={{color: "white"}}>
-                <Button 
-                  style={{
-                    marginRight: "4rem", 
-                    borderRadius: "2rem", 
-                    backgroundColor: "darkcyan",
-                    padding: ".5rem 1rem"
-                  }} 
-                  color="inherit"
-                >
-                  Register
-                </Button>
-              </NavLink>
+              <React.Fragment>
+                <NavLink to='/admin_login' style={{color: "white"}}>
+                  <Button 
+                    style={{
+                      marginRight: "4rem", 
+                      borderRadius: "2rem", 
+                      backgroundColor: "darkcyan",
+                      padding: ".5rem 1rem"
+                    }} 
+                    color="inherit"
+                  >
+                    admin
+                  </Button>
+                </NavLink>
+                <NavLink to='/register' style={{color: "white"}}>
+                  <Button 
+                    style={{
+                      marginRight: "4rem", 
+                      borderRadius: "2rem", 
+                      backgroundColor: "darkcyan",
+                      padding: ".5rem 1rem"
+                    }} 
+                    color="inherit"
+                  >
+                    Register
+                  </Button>
+                </NavLink>
+              </React.Fragment>
             :
             <NavLink to='/login' style={{color: "white"}}>
               <Button 
@@ -110,47 +125,6 @@ function LandingPageAppBar(props) {
       </AppBar>
     </Box>
   );
-}
-
-function Appbar(){
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar 
-        className='css-appbar'
-        style={{backgroundColor: "white", borderBottom: "solid .1rem black"}}
-        position="static"
-      >
-        <Toolbar>
-          <img style={{height: "3rem", marginLeft: "3rem"}} src={Landing_page_logo} alt="loo" />
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            href="/"
-            sx={{
-              flexGrow: 1,
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            <Link 
-              to='/' 
-              style={{ color: "black", textDecoration: "none" }}
-            >
-              <strong style={{color: "red"}}>R</strong>ed Tie
-            </Link>
-            
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  )
 }
 
 export default LandingPageAppBar ;

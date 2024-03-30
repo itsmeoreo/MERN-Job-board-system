@@ -67,7 +67,7 @@ function LoginPage() {
             Cookies.set("user", "seeker")
             navigate('/home');
           })
-          .catch((error)=> console.log(error.message))
+          .catch((error)=> alert(error.response.data.invalid_credentials))
         break;
       case login && login==="free_lancer":
         await axios
@@ -77,7 +77,7 @@ function LoginPage() {
             Cookies.set("user", "free-lancer")
             navigate('/home');
           })
-          .catch((error)=> console.log(error.message))
+          .catch((error)=> alert(error.response.data.invalid_credentials))
         break;
       case login && login==="company":
         await axios
@@ -87,7 +87,7 @@ function LoginPage() {
             Cookies.set("user", "company")
             navigate('/home');
           })
-          .catch((error)=> console.log(error.message))
+          .catch((error)=> alert(error.response.data.invalid_credentials))
         break;
     }
   }
@@ -235,6 +235,15 @@ function LoginPage() {
           }}
         >
           Don't have a account try <Link to="/register">creating account</Link>
+        </p>
+        <p
+          style={{
+            color: "black",
+            textAlign: "end",
+            marginRight: "8%",
+          }}
+        >
+          <Link to="/reset_password">forgot password !?</Link>
         </p>
       </div>
       <Footer />

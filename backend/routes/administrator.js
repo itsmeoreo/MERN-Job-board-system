@@ -14,13 +14,17 @@ administrator_router.post("/", adminController.login);
 
 // administrator_router.get('/all-companies')
 
-administrator_router.get("/all_requests", adminController.allVerifyRequests);
+administrator_router.get("/all_requests", adminMiddleware, adminController.allVerifyRequests);
 
 administrator_router.put("/verify/:company/yes", adminMiddleware, adminController.verifyCompany);
 
-administrator_router.delete('/verify/:company/No', adminController.verifyFailedCompany);
+administrator_router.delete('/verify/:company/No', adminMiddleware, adminController.verifyFailedCompany);
 
-administrator_router.post('/user-block/:username', adminController.block);
+administrator_router.post('/user-block/:username', adminMiddleware, adminController.block);
+
+administrator_router.get('/single_user/:email', adminController.getSingleUser)
+
+administrator_router.put('/update_password', adminController.changePassword)
 
 // administrator_router.delete('/:company')
 

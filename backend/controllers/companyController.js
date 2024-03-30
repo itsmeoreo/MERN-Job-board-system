@@ -18,11 +18,11 @@ const register= async( req, res )=> {
       const duplicateEmployeePhoneNumber= await duplicateCompany.recruiter_phone_number=== companyData.recruiter_phone_number;
       switch (true) {
         case duplicateEmployeeId:
-          return res.status(400).json({Invalid: "Employee Id already registered"})
+          return res.status(400).json({invalid_credentials: "Employee Id already registered"})
         case duplicateEmployeeEmail:
-          return res.status(400).json({Invalid: `This email is already registered with ${companyData.company_name}`})
+          return res.status(400).json({invalid_credentials: `This email is already registered with ${companyData.company_name}`})
         case duplicateEmployeePhoneNumber:
-          return res.status(400).json({Invalid: `This phone number is already registered with ${companyData.company_name}`})
+          return res.status(400).json({invalid_credentials: `This phone number is already registered with ${companyData.company_name}`})
       }
       try {
         if(validators.validateName(companyData.recruiter_name) &&
@@ -41,7 +41,7 @@ const register= async( req, res )=> {
             res.status(200).json({Success: `Change of Controll for ${companyData.company_name}'s Redtie account request sent, account controll will be transfred after the background check, you will receive all the further informations via mail`})
         }
         else {
-          res.status(400).json({Invalid: "Invalid Credentials"})
+          res.status(400).json({invalid_credentials: "Invalid Credentials"})
         }
       } catch (error) {
         res.status(400).json({error: error.message})
@@ -74,11 +74,11 @@ const login= async( req, res )=> {
         res.status(200).json({Success: "Login successful", token})
       }
       else {
-        res.status(400).json({Invalid: "Invalid password"})
+        res.status(400).json({invalid_credentials: "Invalid password"})
       }
     }
     else {
-      return res.status(400).json({Invalid: "Invalid username"})
+      return res.status(400).json({invalid_credentials: "Invalid username"})
     }
   } catch (error) {
     res.status(400).json({error: error.message})

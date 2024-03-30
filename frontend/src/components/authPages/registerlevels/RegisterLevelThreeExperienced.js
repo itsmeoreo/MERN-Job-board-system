@@ -261,6 +261,7 @@ function RegisterLevelThreeExperienced(props) {
               <TextField
                 id="outlined-select-currency"
                 select
+                fullWidth
                 value={year}
                 onChange={HandleYear}
                 label="Year"
@@ -278,6 +279,7 @@ function RegisterLevelThreeExperienced(props) {
                 value={month}
                 onChange={HandleMonth}
                 label="month"
+                fullWidth
                 style={{ textAlign: "start" }}
               >
                 {months.map((option) => (
@@ -306,6 +308,7 @@ function RegisterLevelThreeExperienced(props) {
             <TextField
               id="outlined-select-currency"
               select
+              fullWidth
               label="Notice period"
               style={{ textAlign: "start", marginTop: "1rem" }}
               onChange={(event) => props.SetNotice_period(event.target.value)}

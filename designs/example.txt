@@ -1,257 +1,386 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import SearchIcon from "@mui/icons-material/Search";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import { NavLink } from "react-router-dom";
-import { Avatar, MenuItem, Tooltip } from "@mui/material";
-import Cookies from "js-cookie";
-import { Token } from "@mui/icons-material";
-import Logo from "../../services/Logo.png";
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [usertoken, setUsertoken] = React.useState(Cookies.get("token"));
-  React.useEffect(() => {
-    setUsertoken(Cookies.get("token"));
-  }, [Cookies.get("token")]);
+import { Box, Container, Paper, Stack, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import Recentorders from "./recentorders";
+import axios from "axios";
+import { API_BASE_URL } from "../../../config";
+import "./progress.css";
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+const Content = () => {
+  const [users, setusers] = useState([]);
+  const [data, setdata] = useState([]);
+  const [prodorders, setprodorders] = useState([]);
+  const [completedorders, setcompletedorders] = useState([]);
+  
+  const getAllusers = () => {
+    axios.get(API_BASE_URL + "getusers/").then(res => {
+      setusers(res.data);
+    });
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const getOrdersInProduction = () => {
+    axios
+      .get(API_BASE_URL + "getordersusingstatus/", {
+        params: {
+          status: "pending"
+        }
+      })
+      .then(res => {
+        setprodorders(res.data);
+      })
+      .catch(err => alert(err));
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-    if (true) {
-    }
+  const getOrdersCompleted = () => {
+    axios
+      .get(API_BASE_URL + "getordersusingstatus/", {
+        params: {
+          status: "delivered"
+        }
+      })
+      .then(res => {
+        setcompletedorders(res.data);
+      })
+      .catch(err => alert(err));
   };
-  const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  }));
 
-  const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }));
+  const getMyOrders = () => {
+    axios
+      .get(API_BASE_URL + "getallorderswithoutstatus/")
+      .then(res => {
+        setdata(res.data);
+      })
+      .catch(err => alert(err));
+  };
 
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    width: "100%",
-    "& .MuiInputBase-input": {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    },
-  }));
+  useEffect(() => {
+    getAllusers();
+    getMyOrders();
+    getOrdersInProduction();
+    getOrdersCompleted();
+  }, []);
+  var totalOrders = data.length / 100 * 100 + ",100";
+  var prodOrdercount = prodorders.length + ",100";
+  var completedOrdercount = completedorders.length + ",100";
 
   return (
-    <AppBar style={{ backgroundColor: "#c5aa6a" }} position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: " Georgia",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-              color: "black",
-              textDecoration: "none",
-            }}
-          >
-            <img
-              src={Logo}
-              style={{
-                height: "45px",
-              }}
-            ></img>
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            ></IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            ></Menu>
-          </Box>
+    <Container sx={{ paddingBlock: "30px" }}>
+      <Stack direction={"column"} spacing={4} sx={{ mt: 2 }}>
+        <Box>
           <Typography
             variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            sx={{ color: "black", fontFamily: "fantasy", letterSpacing: "1px" }}
+          >
+            Analytics
+          </Typography>
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              mt: 2
             }}
-          ></Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <NavLink to="/" style={{ color: "white", flexGrow: 0 }}>
-              <Button
-                style={{
-                  marginLeft: "1rem",
-                  borderRadius: "2rem",
-                  backgroundColor: "inherit",
-                  padding: "1rem",
-                }}
-                color="inherit"
+          >
+            <Paper
+              elevation={2}
+              sx={{
+                p: 4,
+                borderRadius: 5,
+                width: "27%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Box
+                sx={{ display: "flex", flexDirection: "column", width: "70%" }}
               >
-                Home
-              </Button>
-            </NavLink>
-          <Box sx={{ flexGrow: 1 }}>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search recepies,ingredients…"
-                inputProps={{ "aria-label": "search" }}
+                <Typography
+                  sx={{ color: "black", fontSize: "16px", fontWeight: 900 }}
+                >
+                  Total Orders
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "black",
+                    fontFamily: "fantasy",
+                    letterSpacing: "2px"
+                  }}
+                >
+                  {data.length}
+                </Typography>
+              </Box>
+              <Box sx={{ width: "30%" }}>
+                <div class="single-chart">
+                  <svg viewBox="0 0 36 36" class="circular-chart green">
+                    <path
+                      class="circle-bg"
+                      d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      class="circle"
+                      stroke-dasharray={totalOrders}
+                      d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="20.35" class="percentage">
+                      {data.length} %
+                    </text>
+                  </svg>
+                </div>
+              </Box>
+            </Paper>
+            <Paper
+              elevation={2}
+              sx={{
+                p: 4,
+                borderRadius: 5,
+                width: "27%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography
+                  sx={{ color: "black", fontSize: "16px", fontWeight: 900 }}
+                >
+                  Orders in Production
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "black",
+                    fontFamily: "fantasy",
+                    letterSpacing: "2px"
+                  }}
+                >
+                  {prodorders.length}
+                </Typography>
+              </Box>
+              <Box sx={{ width: "30%" }}>
+                <div class="single-chart">
+                  <svg viewBox="0 0 36 36" class="circular-chart pink">
+                    <path
+                      class="circle-bg"
+                      d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      class="circle"
+                      stroke-dasharray={prodOrdercount}
+                      d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="20.35" class="percentage">
+                      {prodorders.length} %
+                    </text>
+                  </svg>
+                </div>
+              </Box>
+            </Paper>
+            <Paper
+              elevation={2}
+              sx={{
+                p: 4,
+                borderRadius: 5,
+                width: "25%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography
+                  sx={{ color: "black", fontSize: "16px", fontWeight: 900 }}
+                >
+                  Orders Completed
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "black",
+                    fontFamily: "fantasy",
+                    letterSpacing: "2px"
+                  }}
+                >
+                  {completedorders.length}
+                </Typography>
+              </Box>
+              <Box sx={{ width: "30%" }}>
+                <div class="single-chart">
+                  <svg viewBox="0 0 36 36" class="circular-chart blue">
+                    <path
+                      class="circle-bg"
+                      d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      class="circle"
+                      stroke-dasharray={completedOrdercount}
+                      d="M18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="20.35" class="percentage">
+                      {completedorders.length} %
+                    </text>
+                  </svg>
+                </div>
+              </Box>
+            </Paper>
+          </Box>
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ color: "black", fontFamily: "fantasy", letterSpacing: "1px" }}
+          >
+            New Users
+          </Typography>
+          <Box
+            sx={{ display: "flex", gap: "10px", flexWrap: "wrap", mt: 2 } // justifyContent: "space-between",
+            }
+          >
+            {users.length == 0
+              ? <Typography variant="h5">No Users Present !</Typography>
+              : users.map((e, index) => {
+                  return (
+                    <Paper
+                      elevation={2}
+                      sx={{
+                        p: 3,
+                        borderRadius: 5,
+                        width: "20%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src="https://cdn-icons-png.flaticon.com/512/8742/8742495.png"
+                        sx={{ width: "70px" }}
+                      />
+                      <Typography
+                        sx={{
+                          color: "black",
+                          fontSize: "16px",
+                          fontWeight: 900,
+                          mt: 1
+                        }}
+                      >
+                        {e.username}
+                      </Typography>
+                    </Paper>
+                  );
+                })}
+            {/* <Paper
+              elevation={2}
+              sx={{
+                p: 3,
+                borderRadius: 5,
+                width: "20%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Box
+                component="img"
+                src="https://cdn-icons-png.flaticon.com/512/8742/8742495.png"
+                sx={{ width: "70px" }}
               />
-            </Search>
-          {usertoken === undefined ? (
-              <NavLink to="/login" style={{ color: "white" }}>
-                <Button
-                  style={{
-                    marginLeft: "1rem",
-                    borderRadius: "2rem",
-                    backgroundColor: "inherit",
-                    padding: "1rem",
-                  }}
-                  color="inherit"
-                >
-                  Login
-                </Button>
-              </NavLink>
-          ) : (
-
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+              <Typography
+                sx={{
+                  color: "black",
+                  fontSize: "16px",
+                  fontWeight: 900,
+                  mt: 1
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
               >
-                <NavLink
-                  to="/Profile"
-                  style={{
-                    textDecoration: "none",
-                    backgroundColor: "inherit",
-                    color: "black",
-                  }}
-                >
-                  <MenuItem>
-                    <Typography textAlign="center">Profile</Typography>
-                  </MenuItem>
-                </NavLink>
-                <NavLink
-                  to="/Create_recipe"
-                  style={{
-                    textDecoration: "none",
-                    backgroundColor: "inherit",
-                    color: "black",
-                  }}
-                >
-                  <MenuItem>
-                    <Typography textAlign="center">Create recipe</Typography>
-                  </MenuItem>
-                </NavLink>
-                <NavLink
-                  to="/"
-                  style={{
-                    textDecoration: "none",
-                    backgroundColor: "inherit",
-                    color: "black",
-                  }}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      Cookies.remove("token");
-                      setUsertoken(undefined);
-                    }}
-                  >
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
-                </NavLink>
-              </Menu>
-            
-          )}
-        </Toolbar>
-      </Container>
-    </AppBar>
+                Ahmed
+              </Typography>
+            </Paper>
+            <Paper
+              elevation={2}
+              sx={{
+                p: 3,
+                borderRadius: 5,
+                width: "20%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Box
+                component="img"
+                src="https://cdn-icons-png.flaticon.com/512/8742/8742495.png"
+                sx={{ width: "70px" }}
+              />
+              <Typography
+                sx={{
+                  color: "black",
+                  fontSize: "16px",
+                  fontWeight: 900,
+                  mt: 1
+                }}
+              >
+                John
+              </Typography>
+            </Paper>
+            <Paper
+              elevation={2}
+              sx={{
+                p: 3,
+                borderRadius: 5,
+                width: "20%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <Box
+                component="img"
+                src="https://cdn-icons-png.flaticon.com/512/8742/8742495.png"
+                sx={{ width: "70px" }}
+              />
+              <Typography
+                sx={{
+                  color: "black",
+                  fontSize: "16px",
+                  fontWeight: 900,
+                  mt: 1
+                }}
+              >
+                Mike
+              </Typography>
+            </Paper> */}
+          </Box>
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ color: "black", fontFamily: "fantasy", letterSpacing: "1px" }}
+          >
+            Recent Orders
+          </Typography>
+          <Recentorders />
+        </Box>
+      </Stack>
+    </Container>
   );
-}
-export default ResponsiveAppBar;
+};
+
+export default Content;
