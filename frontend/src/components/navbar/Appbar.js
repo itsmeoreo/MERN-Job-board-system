@@ -240,6 +240,7 @@ function Appbar(props) {
                   {userType !== "seeker" ? (
                     <NavLink to="/new_job">
                       <NoteAddIcon
+                        className="note-add-icon"
                         fontSize="large"
                         color="grey"
                       />
